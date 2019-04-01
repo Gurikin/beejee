@@ -1,0 +1,19 @@
+{
+  "name": "gurikin/beejee.test",
+  "type": "project",
+  "authors": [
+    {
+      "name": "gurikin",
+      "email": "gurikin@yandex.ru"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/",
+      "controllers\\": "controllers/",
+      "models\\": "models/",
+      "views\\": "views/"
+    }
+  }
+}
