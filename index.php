@@ -19,14 +19,11 @@ $loader = require "vendor/autoload.php";
 //$loader->add('controllers\\', __DIR__ . '/controllers/');
 //$loader->add('app\\', __DIR__ . '/app/');
 
-//session_start();
+session_start();
 
 /* Инициализация и запуск FrontController */
 $front = FrontController::getInstance();
 $front->route();
-
-new \controllers\TaskController();
-
 
 /* Вывод данных */
 echo $front->getBody();

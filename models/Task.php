@@ -16,15 +16,11 @@ use PDOException;
 class Task extends Model
 {
     private $_table;
-    public $idtask;
-    public $description;
-    public $status;
-    public $user;
     private $_dbh;
 
     public function __construct() {
         $this->_table =  "task";
-        $this->_dbh = DBConnect::getInstance();
+        $this->_dbh = DBConnect::getInstance()->getDbh();
     }
 
     /**
@@ -35,13 +31,18 @@ class Task extends Model
         try {
             /** @var User $user */
             $user = new User();
-            $resultSelect = $this->_dbh->getDbh()->query($query);
+            $resultSelect = $this->_dbh->query($query);
             if ($resultSelect === false) {
                 throw new PDOException('Ошибка при выполнении запроса select task.');
             }
             while ($row = $resultSelect->fetch(PDO::FETCH_ASSOC)) {
                 if ($row['user_id'] !== null) {
-                    $row['user'] = $user->selectOne($row['user_id']);
+                    $userRow = $user->selectOne($row['user_id']);
+                    $row['user_id'] = $userRow['user_id'];
+                    $row['name'] = $userRow['name'];
+                    $row['email'] = $userRow['email'];
+//                    $row['name'] = $user->selectOne($row['user_id']);
+//                    $row['email'] = $user->selectOne($row['user_id']);
                 }
                 $tableView[] = $row;
             }
