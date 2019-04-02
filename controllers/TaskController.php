@@ -1,7 +1,10 @@
 <?php
 
+namespace controllers;
+
+use app\Controller;
 use app\FrontController;
-use app\FileModel;
+use controllers\IWebController;
 use models\Task;
 
 /**
@@ -9,7 +12,7 @@ use models\Task;
  *
  * @author Igor Banchikov
  */
-class TaskController implements IWebController {
+class TaskController extends Controller implements IWebController {
 
     /**
      * @var string table - using table in db
@@ -18,7 +21,7 @@ class TaskController implements IWebController {
      * @var object $_dbh instance of DBConnect class
      */
     private $_fc;
-    private $_model;
+    public $_model;
 //    private $_dbh;
 
     /**
@@ -28,7 +31,7 @@ class TaskController implements IWebController {
     public function __construct() {
         $this->_fc = FrontController::getInstance();
         /* Инициализация модели */
-        $this->_model = new TaskController();
+//        $this->_model = new Task();
 //        parent::__construct();
 //        $this->_dbh = \app\DBConnect::getDbh();
     }
@@ -40,7 +43,8 @@ class TaskController implements IWebController {
      */
     public function indexAction() {
         $model = new Task();
-        $output = $this->render(INDEX_FILE);
+        $this->_model = $model->selectAll();
+        $output = $this->render(INDEX_FILE,true);
         $this->_fc->setBody($output);
     }
     

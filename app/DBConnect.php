@@ -10,7 +10,7 @@ namespace app;
 use PDO;
 use PDOException;
 
-trait DBConnect
+class DBConnect
 {
     /**
      * @var object $_dbh instance of PDO class. Using for the db query
@@ -22,21 +22,26 @@ trait DBConnect
     private $_conStr,
             $_userName, 
             $_password;
-    private static $_dbh;
+    private $_dbh;
     public static $_instance;
 
-    public function __construct($server = SERVER, $username = USER_NAME, $password = PASSWORD , $db = DB_NAME) {
+    private function __construct($server = SERVER, $username = USER_NAME, $password = PASSWORD , $db = DB_NAME) {
         $this->_userName = $username;
         $this->_password = $password;
         $this->_conStr = 'mysql:dbname=' . $db . ';host=' . $server;
         $this->connect();
     }
-    
+
+    private function __clone()
+    {
+        return false;
+    }
+
     /**
      * @return object $_instance - the instance of this class
      */
     public static function getInstance() {
-      if(!(self::$_instance instanceof self)) 
+      if(!(self::$_instance instanceof self))
         self::$_instance = new self();
       return self::$_instance;
     }
@@ -46,7 +51,7 @@ trait DBConnect
      */
     private function connect() {
       try {
-          self::$_dbh = new PDO($this->_conStr, $this->_userName, $this->_password);
+          $this->_dbh = new PDO($this->_conStr, $this->_userName, $this->_password);
       } catch (PDOException $ex) {
           echo 'Подключение не состоялось: ' . $ex->getMessage();
       }
@@ -69,8 +74,8 @@ trait DBConnect
     /**
      * @return PDO - the connection with db
      */
-    public static function getDbh() {
-        return self::$_dbh;
+    public function getDbh() {
+        return $this->_dbh;
     }
     
     

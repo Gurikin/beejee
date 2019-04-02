@@ -9,12 +9,12 @@
 namespace models;
 
 use app\DBConnect;
-use app\FileModel;
+use app\Model;
+use PDO;
 use PDOException;
 
-class Task extends FileModel
+class Task extends Model
 {
-    use \app\DBConnect;
     private $_table;
     public $idtask;
     public $description;
@@ -24,20 +24,20 @@ class Task extends FileModel
 
     public function __construct() {
         $this->_table =  "task";
-        $this->_dbh = DBConnect::getDbh();
+        $this->_dbh = DBConnect::getInstance();
     }
 
     /**
      * @return array
      */
     public function selectAll($params = []) {
-        $query = "SELECT idtask, description, status, user_id FROM " . $this->_table;
+        $query = "SELECT task_id, description, status, user_id FROM " . $this->_table;
         try {
             /** @var User $user */
             $user = new User();
-            $resultSelect = $this->_dbh->query($query);
+            $resultSelect = $this->_dbh->getDbh()->query($query);
             if ($resultSelect === false) {
-                throw new PDOException('Ошибка при выполнении запроса select task.<br>');
+                throw new PDOException('Ошибка при выполнении запроса select task.');
             }
             while ($row = $resultSelect->fetch(PDO::FETCH_ASSOC)) {
                 if ($row['user_id'] !== null) {

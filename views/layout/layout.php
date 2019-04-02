@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://v4-alpha.getbootstrap.com/favicon.ico">
 
-    <title>Cover Template for Bootstrap</title>
+    <title>BeeJeeTest</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
 
     <!-- Bootstrap core CSS -->
@@ -29,10 +29,10 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <h3 class="masthead-brand">Cover</h3>
+                    <h3 class="masthead-brand">BIV for BeeJee</h3>
                     <nav class="nav nav-masthead">
-                        <a class="nav-link active" href="site/index">Home</a>
-                        <a class="nav-link" href="../login_form.php">Sign in</a>
+                        <a class="nav-link active" href="/task/index">Home</a>
+                        <a class="nav-link" href="/site/login">Sign in</a>
                     </nav>
                 </div>
             </div>

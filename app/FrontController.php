@@ -12,7 +12,8 @@ namespace app;
 use Exception;
 use ReflectionClass;
 
-class FrontController {
+class FrontController extends Controller
+{
     /**
      * @var string $_controller needs to select the controller class to use
      * @var string $_action needs to select the method of using controller class
@@ -26,7 +27,8 @@ class FrontController {
     /**
      * @return object $_instance - the instance of the FrontController
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (!(self::$_instance instanceof self))
             self::$_instance = new self();
         return self::$_instance;
@@ -39,7 +41,8 @@ class FrontController {
      * the _action var = 'selectUserConstAction'
      * the _params var = ('id','2')
      */
-    private function __construct() {
+    private function __construct()
+    {
         $request = $_SERVER['REQUEST_URI'];
         $splits = explode('/', trim($request, '/'));
 
@@ -71,10 +74,11 @@ class FrontController {
      * Very simple routing method
      * @throws Exception on don't find the controller class, action method or if the controller class does not implements IController interface
      */
-    public function route() {
-        if (class_exists($this->getController())) {
+    public function route()
+    {
+        if (class_exists($this->getController(),true)) {
             $rc = new ReflectionClass($this->getController());
-            if ($rc->implementsInterface('IWebController')) {
+            if ($rc->implementsInterface('controllers\IWebController')) {
                 if ($rc->hasMethod($this->getAction())) {
                     $controller = $rc->newInstance();
                     $method = $rc->getMethod($this->getAction());
@@ -84,32 +88,38 @@ class FrontController {
                         $method->invoke($controller);
                     }
                 } else {
-                  //TODO add the 404 redirection
+                    //TODO add the 404 redirection
                     throw new Exception("Action");
                 }
             } else {
-              //TODO add the 404 redirection
+                //TODO add the 404 redirection
                 throw new Exception("Interface");
             }
         } else {
-          //TODO add the 404 redirection
-            throw new Exception("Controller");
+            //TODO add the 404 redirection
+            throw new Exception("Controller on path " . $this->getController() . " not find");
         }
     }
 
-    public function getParams() {
+    public function getParams()
+    {
         return $this->_params;
     }
 
-    public function getController() {
-        return $this->_controller;
+    public function getController()
+    {
+        $controller = CONTROLLERS_NS . $this->_controller;
+        return $controller;
+//        return $this->_controller;
     }
 
-    public function getAction() {
+    public function getAction()
+    {
         return $this->_action;
     }
 
-    public function getBody() {
+    public function getBody()
+    {
         return $this->_body;
     }
 
@@ -117,7 +127,8 @@ class FrontController {
      * @todo output the body string to the body of page
      * @param string $body
      */
-    public function setBody($body) {
+    public function setBody($body)
+    {
         $this->_body = $body;
     }
 
