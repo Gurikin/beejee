@@ -50,8 +50,8 @@
             }
         }
         echo "<td>"
-            . "<a href='/task/edit'><i class='far fa-edit fa-lg mr-2'></i></a>"
-            . "<a href='/task/check'><i class='far fa-check-circle fa-lg'></i></a></td>";
+            . "<a href='/task/update/id/{$this->_model[$i]['task_id']}'><i class='far fa-edit fa-lg mr-2'></i></a>"
+            . "<a href='/task/check/id/{$this->_model[$i]['task_id']}'><i class='far fa-check-circle fa-lg'></i></a></td>";
         echo "</tr>";
     }
     ?>

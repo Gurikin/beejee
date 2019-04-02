@@ -15,25 +15,14 @@ use models\Task;
 class TaskController extends Controller implements IWebController {
 
     /**
-     * @var string table - using table in db
      * @var object $_fc instance of FrontController class
      * @var object $_model instance of FileModel class
-     * @var object $_dbh instance of DBConnect class
      */
     private $_fc;
     public $_model;
-//    private $_dbh;
 
-    /**
-     * Перегрузка методов для работы с БД
-     *
-     */
     public function __construct() {
         $this->_fc = FrontController::getInstance();
-        /* Инициализация модели */
-//        $this->_model = new Task();
-//        parent::__construct();
-//        $this->_dbh = \app\DBConnect::getDbh();
     }
 
     /**
@@ -42,9 +31,20 @@ class TaskController extends Controller implements IWebController {
      * @return array
      */
     public function indexAction() {
-        $model = new Task();
-        $this->_model = $model->selectAll();
+        $this->_model = (new Task())->selectAll();
         $output = $this->render(INDEX_FILE,true);
+        $this->_fc->setBody($output);
+    }
+
+     /**
+     * @todo this method select single task by the id
+     * @param int $taskId
+     * @return array of the task data (see selectTaskAction method)
+     * @throws PDOException
+     */
+    public function updateAction($taskId) {
+        $this->_model = (new Task())->selectOne($taskId);
+        $output = $this->render(UPDATE_FILE,true);
         $this->_fc->setBody($output);
     }
     

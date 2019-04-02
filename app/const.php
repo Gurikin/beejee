@@ -5,10 +5,10 @@ define('MODELS_NS', DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR);
 define('VIEWS_NS', DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR);
 
 /* Имена файлов: views */
-define('USER_AUTH_FILE', 'views/user_signIn.php');
+define('USER_AUTH_FILE', 'views/login-form.php');
 define('INDEX_FILE', 'views/index.php');
 define('TASK_CREATE_FILE', 'views/task_create.php');
-define('SINGLE_TASK_FILE', 'views/single_task.php');
+define('UPDATE_FILE', 'views/update.php');
 define('IMAGE_DIR', $_SERVER["DOCUMENT_ROOT"] . '/web/img/');
 
 /* Шаблон для страниц */

@@ -51,4 +51,21 @@ class Task extends Model
         }
         return $tableView;
     }
+
+    public function selectOne($task_id)
+    {
+        $query = "SELECT task_id, description, status, user_id FROM " . $this->_table . " WHERE task_id = " . $task_id;
+        try {
+            $resultSelect = $this->_dbh->query($query);
+            if ($resultSelect === false) {
+                throw new PDOException('Ошибка при выполнении запроса selectOne from user.');
+            }
+            while ($row = $resultSelect->fetch(PDO::FETCH_ASSOC)) {
+                $tableView[] = $row;
+            }
+        } catch (PDOException $ex) {
+            echo $ex->getMessage();
+        }
+        return $tableView['0'];
+    }
 }
